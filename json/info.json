@@ -1,7 +1,6 @@
 {
   "userInfo":[
     {
-      "id": 0,
       "name": "John",
       "surname": "Smith",
       "country": "USA",
@@ -10,7 +9,6 @@
       "gender": "male"
     },
     {
-      "id": 1,
       "name": "Poghos",
       "surname": "Poghosyan",
       "country": "Armenia",
@@ -19,7 +17,6 @@
       "gender": "male"
     },
     {
-      "id": 2,
       "name": "John",
       "surname": "Doe",
       "country": "England",

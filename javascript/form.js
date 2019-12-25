@@ -1,69 +1,63 @@
-$(document).ready(function() {
+$( document ).ready(function() {
     $.ajax({
         url: 'json/info.json',
         data:'userInfo',
         contentType: "application/json",
         dataType: 'json',
         success: function (data) {
-            let tbody = document.getElementById("table");
-            for (let i = 0; i < data.userInfo.length; i++) {
-                let tr = document.createElement('tr');
-                tbody.appendChild(tr);
-                tr.innerHTML += `
-                    <td>${data.userInfo[i].id}</td>
-                    <td>${data.userInfo[i].name}</td>
-                    <td>${data.userInfo[i].surname}</td>
-                    <td>${data.userInfo[i].country}</td>
-                    <td>${data.userInfo[i].city}</td>
-                    <td>${data.userInfo[i].dateOfBirth}</td>
-                    <td>${data.userInfo[i].gender}</td>
-                    <td>
-                        <button class="btn btn-success" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                        <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                    </td>
-                `
-            }
-
-            // var name = document.getElementById('name').value;
-            // var surname = document.getElementById('name').value;
-            // var country = document.getElementById('name').value;z
-            // var city = document.getElementById('name').value;
-            // var birthday = document.getElementById('name').value;
-            // var gender = document.getElementById('name').value;
-
-            $(document).on('click', '#submit', function() {
-                let usersArray = [];
-                var info = document.getElementById('info');
-                usersArray.push({
-                    data,
-                    name: info[0].value,
-                    surname: info[1].value,
-                    country: info[2].value,
-                    city: info[3].value,
-                    dateOfBirth: info[4].value,
-                    gender: info[5].value,
-                });
-                localStorage.setItem('data', JSON.stringify(usersArray));
-                const users = JSON.parse(localStorage.getItem('data'));
-
-                for (let i = 0; i < users[0].length; i++) {
-                    let tr2 = document.createElement('tr');
-                    tbody.appendChild(tr2);
-                    tr2.innerHTML += `
-                    <td>${2}</td>
-                    <td>${users[0].name}</td>
-                    <td>${users[0].surname}</td>
-                    <td>${users[0].country}</td>
-                    <td>${users[0].city}</td>
-                    <td>${users[0].dateOfBirth}</td>
-                    <td>${users[0].gender}</td>
-                    <td>
-                        <button class="btn btn-success" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                        <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                    </td>
-                `
-                }
-            });
+            localStorage.setItem('data', JSON.stringify(data.userInfo));
+            addTable(data.userInfo);
         }
     });
+
+    document.getElementById( 'add' ).onclick = function(event){
+        event.preventDefault();
+        const data = JSON.parse(localStorage.getItem('data'));
+        var name = document.getElementById('name').value;
+        var surname = document.getElementById('surname').value;
+        var country = document.getElementById('country').value;
+        var city = document.getElementById('city').value;
+        var birthday = document.getElementById('birthday').value;
+        var gender = $('input[name=inlineRadioOptions]:checked', '#info').val();
+        var user = {
+            name: name,
+            surname: surname,
+            country: country,
+            city: city,
+            dateOfBirth: birthday,
+            gender:gender
+        };
+        data.push(user);
+        localStorage.setItem('data', JSON.stringify(data));
+        if(data) {
+            $('#table').html('');
+            addTable(data);
+        }
+        $('#info')[0].reset();
+    };
+
+    function addTable (arr) {
+        for (let i = 0; i < arr.length; i++) {
+            const tr = document.createElement('tr');
+            $('#table').append(tr);
+            tr.innerHTML += `
+                <td>${i + 1}</td>
+                <td>${arr[i].name}</td>
+                <td>${arr[i].surname}</td>
+                <td>${arr[i].country}</td>
+                <td>${arr[i].city}</td>
+                <td>${arr[i].dateOfBirth}</td>
+                <td>${arr[i].gender}</td>
+                <td>
+                    <button class="btn btn-success" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="btn btn-danger" type="submit" id="${i + 1}" onclick="removeEl(${i + 1})"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </td>
+                `
+        }
+    }
+
+
+    function removeEl(id){
+        console.log(id)
+    }
 });
