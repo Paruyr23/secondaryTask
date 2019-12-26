@@ -34,11 +34,16 @@ $( document ).ready(function() {
             addTable(data);
         }
         $('#info')[0].reset();
+        $("a").last().addClass( "nav-link active" );
+        $("#messages").addClass( "active" );
+        $("#edit").removeClass( " active" );
+        $("a").first().removeClass("active");
     };
 
     function addTable (arr) {
         for (let i = 0; i < arr.length; i++) {
             const tr = document.createElement('tr');
+            tr.setAttribute('id',`${i + 1}`);
             $('#table').append(tr);
             tr.innerHTML += `
                 <td>${i + 1}</td>
@@ -49,15 +54,38 @@ $( document ).ready(function() {
                 <td>${arr[i].dateOfBirth}</td>
                 <td>${arr[i].gender}</td>
                 <td>
-                    <button class="btn btn-success" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                    <button class="btn btn-danger" type="submit" id="${i + 1}" onclick="removeEl(${i + 1})"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    <button class="btn btn-success button-edit" type="button" value="edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="btn btn-danger button-delete" type="button" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                 </td>
                 `
         }
     }
 
-
-    function removeEl(id){
-        console.log(id)
+    function deleteRow(row) {
+        document.getElementById('mainTable').deleteRow(row);
     }
+    function tableclick(del) {
+        if(!del)
+            del = window.event;
+
+        if(del.target.value === "delete")
+            deleteRow( del.target.parentNode.parentNode.rowIndex );
+    }
+    document.getElementById('mainTable').addEventListener('click',tableclick,false);
+
+
+    console.log(localStorage.getItem('data'))
+
+    $(document).on("click", ".button-edit", function() {
+        function change()
+        {
+            var elem = document.getElementById("add");
+            if (elem.value === "Add") elem.value = "Update";
+            else elem.value = "Update";
+        }
+                $("a").last().removeClass("active");
+                $("#messages").removeClass("active");
+                $("#edit").addClass("active");
+                $("a").first().addClass("active");
+    });
 });

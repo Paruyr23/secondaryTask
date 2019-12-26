@@ -58,12 +58,14 @@
                         </div>
                         <label class="col-lg-3 col-form-label form-control-label">Gender</label>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" value="male" required>
-                            <label class="form-check-label" class="col-lg-3 col-form-label form-control-label">Male</label>
+                            <label for="vs" class="form-check-label" class="col-lg-3 col-form-label form-control-label">
+                                <input id="vs" class="form-check-input" type="radio" name="inlineRadioOptions" value="male" required>Male
+                            </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" value="female" required>
-                            <label class="form-check-label" class="col-lg-3 col-form-label form-control-label">Female</label>
+                            <label for="as" class="form-check-label" class="col-lg-3 col-form-label form-control-label">
+                                <input id="as" class="form-check-input" type="radio" name="inlineRadioOptions" value="female" required>Female
+                            </label>
                         </div>
                         <br>
                         <input class="btn btn-primary float-right" id="add" type="submit" value="Add">
@@ -71,7 +73,7 @@
                 </div>
                 <div class="tab-pane" id="messages">
                     <h5 class="mt-2 d-flex justify-content-center text-primary">Users Information</h5>
-                    <table class="table table-sm table-hover table-striped text-info">
+                    <table class="table table-sm table-hover table-striped text-info" id="mainTable">
                         <thead>
                         <th>#</th>
                         <th>Name</th>
