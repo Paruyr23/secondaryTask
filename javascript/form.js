@@ -1,31 +1,13 @@
-function editTab(index) {
-    const data = JSON.parse(localStorage.getItem('data'));
-    console.log(data[index].dateOfBirth);
-    $('#name').val(data[index].name);
-    $('#surname').val(data[index].surname);
-    $('#country').val(data[index].country);
-    $('#city').val(data[index].city);
-    $('#birthday').val(data[index].dateOfBirth);
-    $(`#birthday${data[index].gender}`).prop("checked", true);
-
-    document.getElementById('form-tab').click();
-
-    $("a").last().removeClass("active");
-    $("#messages").removeClass("active");
-    $("#edit").addClass("active");
-    $("a").first().addClass("active");
-}
-$( document ).ready(function() {
-    $.ajax({
-        url: 'json/info.json',
-        data: 'userInfo',
-        contentType: "application/json",
-        dataType: 'json',
-        success: function (data) {
-            localStorage.setItem('data', JSON.stringify(data.userInfo));
-            addTable(data.userInfo);
-        }
-    });
+$.ajax({
+    url: 'json/info.json',
+    data: 'userInfo',
+    contentType: "application/json",
+    dataType: 'json',
+    success: function (data) {
+        localStorage.setItem('data', JSON.stringify(data.userInfo));
+        addTable(data.userInfo);
+    }
+});
 
     document.getElementById('add').onclick = function (event) {
         const data = JSON.parse(localStorage.getItem('data'));
@@ -34,7 +16,7 @@ $( document ).ready(function() {
         var country = $('#country').val();
         var city = $('#city').val();
         var birthday = $('#birthday').val();
-        var gender = $('input[name=inlineRadioOptions]:checked', '#info').val();
+        var gender = $("input[name='inlineRadioOptions']:checked").val();
 
         if (name && surname && country && city && birthday && gender) {
             event.preventDefault();
@@ -91,4 +73,38 @@ $( document ).ready(function() {
     }
     document.getElementById('mainTable').addEventListener('click', tableclick, false);
 
-});
+const data = JSON.parse(localStorage.getItem('data'));
+function editTab(index) {
+    $('#name').val(data[index].name);
+    $('#surname').val(data[index].surname);
+    $('#country').val(data[index].country);
+    $('#city').val(data[index].city);
+    $('#birthday').val(data[index].dateOfBirth);
+    $(`#${data[index].gender}`).prop("checked", true);
+    // console.log(data[index].gender);
+    $("a").last().removeClass("active");
+    $("#messages").removeClass("active");
+    $("#edit").addClass("active");
+    $("#add").addClass("invisible");
+    $("#update").removeClass("invisible");
+    $("a").first().addClass("active");
+}
+
+function updateTab(index) {
+    index = 1;
+    index++;
+    data[index].name = $('#name').val();
+    data[index].surname = $('#surname').val();
+    data[index].country = $('#country').val();
+    data[index].city = $('#city').val();
+    data[index].dateOfBirth = $('#birthday').val();
+    data[index].gender = $("input[name='inlineRadioOptions']:checked").val();
+    addTable(data);
+    $("#add").removeClass("invisible");
+    $("#update").addClass("invisible");
+    $("a").last().addClass("nav-link active");
+    $("#messages").addClass("active");
+    $("#edit").removeClass(" active");
+    $("a").first().removeClass("active");
+}
+

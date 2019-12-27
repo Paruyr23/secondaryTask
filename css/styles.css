@@ -1,3 +1,7 @@
 td button{
     padding: 1px 6px !important;
 }
+
+.invisible{
+    visibility: hidden;
+}
